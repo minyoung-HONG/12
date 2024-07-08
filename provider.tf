@@ -4,15 +4,15 @@ provider "aws" {
   secret_key = var.AWS_SECRET_ACCESS_KEY
 }
 
-variable "AWS_ACCESS_KEY_ID" {
-  #description = ""
-  sensitive   = true
-}
+#variable "AWS_ACCESS_KEY_ID" {
+#  #description = ""
+#  sensitive   = true
+#}
 
-  variable "AWS_SECRET_ACCESS_KEY" {
-  description = ""
- sensitive   = true
-}
+ # variable "AWS_SECRET_ACCESS_KEY" {
+ # description = ""
+ #sensitive   = true
+#}
 
 
 terraform {
