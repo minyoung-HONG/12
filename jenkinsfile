@@ -10,8 +10,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                           branches: [[name: '*/main']], 
-                          userRemoteConfigs: [[credentialsId: 'git', 
-                                               url: 'https://github.com/minyoung-HONG/0708.git']]])
+                          userRemoteConfigs: [credentialsId: 'git'])
             }
         }
 
@@ -42,4 +41,8 @@ pipeline {
                         sh 'terraform apply'
                     }
                 }
-         
+}
+}
+}
+}
+}
