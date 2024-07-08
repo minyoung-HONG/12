@@ -22,7 +22,7 @@ pipeline {
                 script {
                     // Initialize Terraform
                     withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
-                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform init'
                         }
                     }
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     // Run Terraform plan
                     withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
-                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform plan'
                         }
                     }
@@ -48,7 +48,7 @@ pipeline {
                 script {
                     // Apply Terraform changes
                     withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
-                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform apply'
                         }
                     }
