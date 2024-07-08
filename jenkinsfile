@@ -8,8 +8,6 @@ pipeline {
     stages {
         stage('Checkout Terraform') {
             steps {
-                script {
-                    // Checkout from Git repository
                     checkout([$class: 'GitSCM',
                               branches: [[name: 'main']],
                               userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/minyoung-HONG/12.git']]])
@@ -19,9 +17,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                script {
-                    // Initialize Terraform
-                    withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
+                 withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
                         withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform init'
                         }
@@ -32,9 +28,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                script {
-                    // Run Terraform plan
-                    withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
+              withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
                         withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform plan'
                         }
@@ -45,9 +39,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                script {
-                    // Apply Terraform changes
-                    withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
+              withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
                         withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}"]) {
                             sh 'terraform apply'
                         }
