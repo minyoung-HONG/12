@@ -18,6 +18,8 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
                     withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                        sh 'echo $TF_TOKEN_app_terraform_io'
+                        sh 'echo $TF_TOKEN'
                         sh 'terraform init'
                     }
                 }
