@@ -23,7 +23,7 @@ pipeline {
                     // Initialize Terraform
                     withCredentials([string(credentialsId: 'terraform', variable: 'TF_TOKEN')]) {
                         withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
-                            sh 'terraform init -input=false'
+                            sh 'terraform init'
                         }
                     }
                 }
