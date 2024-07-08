@@ -24,7 +24,7 @@ pipeline {
                     }
                 }
             }
-        }
+    
 
         stage('Terraform Plan') {
             steps {
@@ -35,7 +35,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
 
         stage('Terraform Apply') {
             steps {
@@ -47,5 +47,3 @@ pipeline {
                 }
             }
         }
-    }
-}
