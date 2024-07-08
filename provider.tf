@@ -18,7 +18,7 @@ provider "aws" {
 terraform {
   cloud {
     organization = "inside-myhong"
-    hostname = "app.terraform.io"
+    #hostname = "app.terraform.io"
     workspaces {
       name = "12"
     }
