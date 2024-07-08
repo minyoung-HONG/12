@@ -8,38 +8,46 @@ pipeline {
     stages {
         stage('Checkout Terraform') {
             steps {
-                                    checkout([$class: 'GitSCM',
-                              branches: [[name: 'main']],  // Branch 이름 수정
-                              userRemoteConfigs: [[credentialsId: 'git']]])  // URL 추가
+                script {
+                    // Checkout from Git repository
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: 'main']],
+                              userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/minyoung-HONG/12.git']]])
                 }
             }
         }
 
         stage('Terraform Init') {
             steps {
-                withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
-                                    withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                script {
+                    // Initialize Terraform
+                    withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
+                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
                             sh 'terraform init -input=false'
                         }
                     }
                 }
             }
-        
+        }
+
         stage('Terraform Plan') {
             steps {
-                withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
-                                     withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
+                script {
+                    // Run Terraform plan
+                    withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
+                        withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
                             sh 'terraform plan'
                         }
                     }
                 }
             }
-        
+        }
+
         stage('Terraform Apply') {
             steps {
-                withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
-                    script {
-                        // Set Terraform environment variables and apply changes
+                script {
+                    // Apply Terraform changes
+                    withCredentials([string(credentialsId: 'TF_TOKEN', variable: 'TF_TOKEN')]) {
                         withEnv(["TF_TOKEN_app_terraform_io=${TF_TOKEN}", "TF_WORKSPACE=${TF_WORKSPACE}"]) {
                             sh 'terraform apply'
                         }
@@ -48,3 +56,4 @@ pipeline {
             }
         }
     }
+}
